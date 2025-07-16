@@ -1,0 +1,25 @@
+[project]
+name = "batch-tn"
+version = "0.1.0"
+description = "A Python library for batch processing"
+authors = [
+    { name = "kinianlo", email = "keonlo123@gmail.com" }
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
+dependencies = [
+    "cotengra",
+    "optuna",
+]
+
+
+[project.urls]
+Homepage = "https://github.com/kinianlo/batch-tn"
+
+[tool.setuptools]
+packages = ["batch_tn"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
