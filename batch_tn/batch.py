@@ -3,6 +3,7 @@ from collections import defaultdict
 from cotengra import einsum_tree
 from cotengra.contract import extract_contractions
 from cotengra.contract import einsum as ctg_einsum
+from autoray import do
 from functools import lru_cache
 
 def get_result_shape(eq, shapes):
