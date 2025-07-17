@@ -3,26 +3,29 @@
 This module provides efficient batching of tensor contractions across multiple contraction trees by identifying common patterns and executing them in parallel using einsum operations.
 
 ## Quick Start
+Install the package via pip:
+
+```bash
+pip install git+https://github.com/kinianlo/batch-tn.git
+```
 
 ```python
+from batch_tn import batch_einsum
 import numpy as np
-import cotengra as ctg
-from batch_contract import batch_contract
 
-
-trees = [
-    ctg.einsum_tree('ij,jk->ik', *[(4, 4), (4, 4)]),
-    ctg.einsum_tree('ij,jk->ik', *[(4, 4), (4, 4)]),
-    ctg.einsum_tree('ab,bc->ac', *[(4, 4), (4, 4)])
+eqs = [
+    'ij,jk->ik', # matrix-matrix multiplication
+    'i,ikj,j->k' # vector-matrix-vector multiplication
 ]
 
-arrays = [
-    [np.random.rand(4, 4), np.random.rand(4, 4)],
-    [np.random.rand(4, 4), np.random.rand(4, 4)],
-    [np.random.rand(4, 4), np.random.rand(4, 4)]
+shapes_list = [
+    [(3, 4), (4, 5)], # shapes for the first equation
+    [(3,), (3, 5, 4), (4,)] # shapes for the second equation
 ]
 
-batch_contract(trees, arrays=arrays)
+arrays_list = [[np.random.rand(*shape) for shape in shapes] for shapes in shapes_list]
+
+batch_einsum(eqs, arrays_list)
 ```
 
 ## API Reference
