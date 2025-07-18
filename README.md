@@ -2,12 +2,23 @@
 
 This module provides efficient batching of tensor contractions across multiple contraction trees by identifying common patterns and executing them in parallel using einsum operations.
 
-## Quick Start
-Install the package via pip:
+## Installation
+
+Install the package directly via pip:
 
 ```bash
 pip install git+https://github.com/kinianlo/batch-tn.git
 ```
+
+Or clone and install locally:
+
+```bash
+git clone https://github.com/kinianlo/batch-tn.git
+cd batch-tn
+pip install -e .
+```
+
+## Quick Start
 
 ```python
 from batch_tn import batch_einsum
@@ -30,27 +41,22 @@ batch_einsum(eqs, arrays_list)
 
 ## API Reference
 
-### `batch_contract(trees, arrays)`
+### `batch_tn.batch_einsum(eqs, arrays)`
 
 Main function for batched contraction.
 
 **Parameters:**
-- `trees`: List of contraction trees
-- `arrays`: List of arrays for each tree
+- `eqs`: List of einsum equations
+- `arrays`: List of arrays for each equation
 
 ## How It Works
 
-1. **Pattern Recognition**: Identifies identical contraction patterns across trees
+1. **Pattern Recognition**: Identifies identical contraction patterns across contraction trees
 2. **Batching**: Groups contractions with the same einsum equation and tensor shapes
-3. **Parallel Execution**: Uses `np.einsum` with `...` notation to process batches
-4. **Result Distribution**: Distributes results back to individual trees
-5. **Progressive Contraction**: Continues until all trees are fully contracted
+3. **Result Distribution**: Distributes results back to individual trees
+4. **Progressive Contraction**: Continues until all trees are fully contracted
 
 ## Performance Benefits
 
 - **Reduced Operations**: N individual contractions → 1 batched contraction
 - **GPU Ready**: Batching approach naturally extends to GPU computation
-
-## Examples
-
-See `demo.ipynb` for a demonstration of how to use the `batch_contract` function.
